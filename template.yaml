@@ -15,5 +15,6 @@ Resources:
       Environment:
         Variables:
           DYNAMO_TABLE_NAME: YOUR_TABLE_NAME
+          DYNAMO_ENDPOINT: YOUR_DYNAMO_ENDPOINT
       RuntimeManagementConfig:
         UpdateRuntimeOn: Auto
