@@ -4,8 +4,6 @@ services:
     image: mcr.microsoft.com/devcontainers/go
     ports:
       - "8080:8080"
-    env_file:
-      - setting.env
     depends_on:
       - dynamodb-local
 
