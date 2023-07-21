@@ -1,11 +1,30 @@
-version: '3'
+version: "3"
 services:
   api:
+    image: mcr.microsoft.com/devcontainers/go
+    ports:
+      - "8080:8080"
+    depends_on:
+      - dynamodb-local
     extra_hosts:
       - "host.docker.internal:host-gateway"
-
     volumes:
-      - .:/$PWD:cached
-      
+      - ..:/$PWD:cached
     command: /bin/sh -c "while sleep 1000; do :; done"
- 
+
+  dynamodb-local:
+    command: "-jar DynamoDBLocal.jar -sharedDb"
+    image: "amazon/dynamodb-local:latest"
+    container_name: dynamodb-local
+    ports:
+      - "8000:8000"
+
+  dynamodb-admin:
+    container_name: dynamodb-admin
+    image: aaronshaf/dynamodb-admin:latest
+    environment:
+      - DYNAMO_ENDPOINT=dynamodb-local:8000
+    ports:
+      - 8001:8001
+    depends_on:
+      - dynamodb-local
