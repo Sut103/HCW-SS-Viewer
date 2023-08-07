@@ -24,8 +24,12 @@
 sam build
 ```
 
-### sam local invoke
-* ルートディレクトリにて
+### sam local
+* Lambdaの実行
 ```
 sam local invoke --container-host host.docker.internal --container-host-interface host.docker.internal --docker-network hcw-ss-viewer_devcontainer_default -n local_invoke/local_invoke_env.json -e local_invoke/get_event.json
+```
+* API Gatewayの実行
+```
+sam local start-api --container-host host.docker.internal --container-host-interface host.docker.internal --docker-network hcw-ss-viewer_devcontainer_default -n local_invoke/local_invoke_env.json
 ```
