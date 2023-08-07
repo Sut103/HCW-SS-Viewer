@@ -49,7 +49,7 @@ func getScreenshots(c echo.Context) error {
 	// 暫定で配列からランダムに6個とりだす
 	ret_screenshots := make([]aws.Screenshot, 0)
 	for i := 0; i < 6; i++ {
-		rand.Seed(time.Now().UnixNano())
+		rand.New(rand.NewSource(time.Now().UnixNano()))
 		ret_screenshots = append(ret_screenshots, screenshots[rand.Intn(len(screenshots))])
 	}
 
