@@ -31,5 +31,5 @@ sam local invoke --container-host host.docker.internal --container-host-interfac
 ```
 * API Gatewayの実行
 ```
-sam local start-api --container-host host.docker.internal --container-host-interface host.docker.internal --docker-network hcw-ss-viewer_devcontainer_default -n local_invoke/local_invoke_env.json
+sam local start-api --warm-containers LAZY --container-host host.docker.internal --container-host-interface host.docker.internal --docker-network hcw-ss-viewer_devcontainer_default -n local_invoke/local_invoke_env.json
 ```
