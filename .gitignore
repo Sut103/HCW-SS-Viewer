@@ -16,3 +16,4 @@
 
 setting.env
 .aws-sam/
+local_invoke_env.json
