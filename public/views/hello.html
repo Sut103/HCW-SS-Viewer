@@ -19,29 +19,29 @@
 
     <div class="columns is-centered">
         <div class="column is-10">
-            <div class="columns is-multiline">
+            <div class="columns is-multiline is-vcentered">
                 {{range .}}
                 <div class="column is-one-third">
                     <div class="card">
                         <div class="card-image ">
                             <figure class="image">
-                                <img src="{{.URL}}" >
+                                <img src="{{.URL}}">
                             </figure>
                         </div>
                         <footer class="card-footer">
                             <p class="card-footer-item">
-                              <span>
-                                <a href="{{.URL}}" target="_blank">View Original</a>
-                              </span>
+                                <span>
+                                    <a href="{{.URL}}" target="_blank">View Original</a>
+                                </span>
                             </p>
-                          </footer>
+                        </footer>
                     </div>
                 </div>
                 {{end}}
             </div>
         </div>
     </div>
-    
+
     <footer class="footer">
         <div class="content has-text-right">
             <p>
