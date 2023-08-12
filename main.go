@@ -7,6 +7,7 @@ import (
 	"log"
 	"math/rand"
 	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/Sut103/HCW-SS-Viewer/aws"
@@ -18,9 +19,15 @@ import (
 )
 
 var echoLambda *echoadapter.EchoLambda
+var MAX_HIGHT int = 600
 
 type Template struct {
 	templates *template.Template
+}
+
+type Response struct {
+	URL         string `json:"url"`
+	OriginalURL string `json:"original_url"`
 }
 
 func init() {
@@ -47,13 +54,30 @@ func getScreenshots(c echo.Context) error {
 	}
 
 	// 暫定で配列からランダムに6個とりだす
-	ret_screenshots := make([]aws.Screenshot, 0)
+	res_screenshots := make([]Response, 0)
 	for i := 0; i < 6; i++ {
+
 		rand.New(rand.NewSource(time.Now().UnixNano()))
-		ret_screenshots = append(ret_screenshots, screenshots[rand.Intn(len(screenshots))])
+		random_num := rand.Intn(len(screenshots))
+		url := screenshots[random_num].URL
+
+		// Attachmentsが複数あるため、URLに対応するAttachmentを特定する必要がある
+		for _, attachment := range screenshots[random_num].ChannelMessage.Attachments {
+			if attachment.ProxyURL == url {
+				width := strconv.Itoa((attachment.Width * MAX_HIGHT) / attachment.Height)
+				height := strconv.Itoa(MAX_HIGHT)
+
+				res_screenshots = append(res_screenshots, Response{
+					URL:         url + "?width=" + width + "&height=" + height,
+					OriginalURL: url,
+				})
+
+				break
+			}
+		}
 	}
 
-	return c.Render(http.StatusOK, "main", ret_screenshots)
+	return c.Render(http.StatusOK, "main", res_screenshots)
 }
 
 func HandleRequest(ctx context.Context, req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
